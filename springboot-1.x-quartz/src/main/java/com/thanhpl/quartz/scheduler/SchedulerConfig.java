@@ -18,6 +18,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
+import com.thanhpl.quartz.scheduler.job.DummyJob;
 import com.thanhpl.quartz.scheduler.job.HelloJob;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,15 @@ public class SchedulerConfig {
 		log.info("Starting jobs....");
 		return factory;
 	}
+	
+	@Bean
+	public Properties quartzProperties() throws IOException {
+		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+		propertiesFactoryBean.setLocation(new ClassPathResource(
+				"/quartz.properties"));
+		propertiesFactoryBean.afterPropertiesSet();
+		return propertiesFactoryBean.getObject();
+	}
 
 	@Bean
 	public SimpleTriggerFactoryBean simpleJobTrigger(
@@ -57,18 +67,31 @@ public class SchedulerConfig {
 	}
 
 	@Bean
-	public Properties quartzProperties() throws IOException {
-		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-		propertiesFactoryBean.setLocation(new ClassPathResource(
-				"/quartz.properties"));
-		propertiesFactoryBean.afterPropertiesSet();
-		return propertiesFactoryBean.getObject();
+	public SimpleTriggerFactoryBean dummyJobTrigger(
+			@Qualifier("dummyJobDetail") JobDetail jobDetail, 
+			@Value("${job.dummy.frequency}") long frequency) {
+		SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
+		factoryBean.setJobDetail(jobDetail);
+		factoryBean.setStartDelay(0L);
+		factoryBean.setRepeatInterval(frequency);
+		log.info("job.dummy.frequency=" + frequency);
+		factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+		return factoryBean;
 	}
+	
 
 	@Bean
 	public JobDetailFactoryBean helloJobDetail() {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
 		factoryBean.setJobClass(HelloJob.class);
+		factoryBean.setDurability(true);
+		return factoryBean;
+	}
+	
+	@Bean
+	public JobDetailFactoryBean dummyJobDetail() {
+		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+		factoryBean.setJobClass(DummyJob.class);
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}

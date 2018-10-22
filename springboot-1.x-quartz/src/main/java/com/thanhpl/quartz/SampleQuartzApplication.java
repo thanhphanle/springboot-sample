@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @SpringBootApplication
-public class SimpleQuartzApplication {
+public class SampleQuartzApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SimpleQuartzApplication.class, args);
+		SpringApplication.run(SampleQuartzApplication.class, args);
 	}
 }
