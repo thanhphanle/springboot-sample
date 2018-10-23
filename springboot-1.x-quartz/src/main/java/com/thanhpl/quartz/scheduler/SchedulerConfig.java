@@ -21,9 +21,6 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import com.thanhpl.quartz.scheduler.job.DummyJob;
 import com.thanhpl.quartz.scheduler.job.HelloJob;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Configuration
 public class SchedulerConfig {
 	@Bean
@@ -41,7 +38,7 @@ public class SchedulerConfig {
 		factory.setJobFactory(jobFactory);
 		factory.setQuartzProperties(quartzProperties());
 		factory.setTriggers(simpleJobTrigger, dummyJobTrigger);
-		log.info("Starting jobs....");
+		System.out.println("Starting jobs....");
 		return factory;
 	}
 
@@ -60,7 +57,7 @@ public class SchedulerConfig {
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
 		factoryBean.setRepeatInterval(frequency);
-		log.info("job.hello.frequency=" + frequency);
+		System.out.println("job.hello.frequency=" + frequency);
 		factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
 		return factoryBean;
 	}
@@ -72,7 +69,7 @@ public class SchedulerConfig {
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
 		factoryBean.setRepeatInterval(frequency);
-		log.info("job.dummy.frequency=" + frequency);
+		System.out.println("job.dummy.frequency=" + frequency);
 		factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
 		return factoryBean;
 	}
