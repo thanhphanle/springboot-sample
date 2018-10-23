@@ -9,6 +9,6 @@ public class DummyServiceImpl implements DummyService {
 
 	@Override
 	public void process() {
-		System.out.println("Process service...");
+		System.out.println("Process dummy service...");
 	}
 }

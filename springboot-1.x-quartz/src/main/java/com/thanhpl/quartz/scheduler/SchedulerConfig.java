@@ -35,28 +35,27 @@ public class SchedulerConfig {
 
 	@Bean
 	public SchedulerFactoryBean schedulerFactoryBean(JobFactory jobFactory,
-			Trigger simpleJobTrigger) throws IOException {
+			@Qualifier("simpleJobTrigger") Trigger simpleJobTrigger,
+			@Qualifier("dummyJobTrigger") Trigger dummyJobTrigger) throws IOException {
 		SchedulerFactoryBean factory = new SchedulerFactoryBean();
 		factory.setJobFactory(jobFactory);
 		factory.setQuartzProperties(quartzProperties());
-		factory.setTriggers(simpleJobTrigger);
+		factory.setTriggers(simpleJobTrigger, dummyJobTrigger);
 		log.info("Starting jobs....");
 		return factory;
 	}
-	
+
 	@Bean
 	public Properties quartzProperties() throws IOException {
 		PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-		propertiesFactoryBean.setLocation(new ClassPathResource(
-				"/quartz.properties"));
+		propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
 		propertiesFactoryBean.afterPropertiesSet();
 		return propertiesFactoryBean.getObject();
 	}
 
 	@Bean
-	public SimpleTriggerFactoryBean simpleJobTrigger(
-			@Qualifier("helloJobDetail") JobDetail jobDetail, 
-			@Value("${job.hello.frequency}") long frequency) {
+	public SimpleTriggerFactoryBean simpleJobTrigger(@Qualifier("helloJobDetail") JobDetail jobDetail,
+			@Value("${job.hello.frequency}") Long frequency) {
 		SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
 		factoryBean.setJobDetail(jobDetail);
 		factoryBean.setStartDelay(0L);
@@ -67,8 +66,7 @@ public class SchedulerConfig {
 	}
 
 	@Bean
-	public SimpleTriggerFactoryBean dummyJobTrigger(
-			@Qualifier("dummyJobDetail") JobDetail jobDetail, 
+	public SimpleTriggerFactoryBean dummyJobTrigger(@Qualifier("dummyJobDetail") JobDetail jobDetail,
 			@Value("${job.dummy.frequency}") long frequency) {
 		SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
 		factoryBean.setJobDetail(jobDetail);
@@ -78,7 +76,6 @@ public class SchedulerConfig {
 		factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
 		return factoryBean;
 	}
-	
 
 	@Bean
 	public JobDetailFactoryBean helloJobDetail() {
@@ -87,7 +84,7 @@ public class SchedulerConfig {
 		factoryBean.setDurability(true);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public JobDetailFactoryBean dummyJobDetail() {
 		JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();

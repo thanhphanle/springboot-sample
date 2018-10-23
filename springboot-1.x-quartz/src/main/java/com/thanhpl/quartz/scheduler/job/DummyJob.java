@@ -11,10 +11,10 @@ public class DummyJob implements Job {
 
 	@Autowired
 	private DummyService dummyService;
-	
+
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		// Test autowired bean in Quartz job
+		// Test autowired object in Quartz job
 		dummyService.process();
 	}
 
