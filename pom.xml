@@ -11,6 +11,7 @@
 	<modules>
 		<module>springboot-1.x-quartz</module>
 		<module>springboot-2.x-quartz</module>
+		<module>springboot-mail</module>
 	</modules>
 
 	<properties>
