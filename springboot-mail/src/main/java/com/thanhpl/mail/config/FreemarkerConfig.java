@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 @Configuration
-public class FreemakerConfig {
+public class FreemarkerConfig {
 	@Bean
 	@Primary
 	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {

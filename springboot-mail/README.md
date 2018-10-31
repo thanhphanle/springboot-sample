@@ -1,2 +1,2 @@
 # springboot-mail
-Spring Boot Mail Service with Velocity and Freemaker
+Spring Boot Mail Service with Velocity and Freemarker
