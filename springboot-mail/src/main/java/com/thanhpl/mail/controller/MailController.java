@@ -175,7 +175,8 @@ public class MailController {
 		SendMailResponseData data = new SendMailResponseData();
 
 		try {
-			freemarker.template.Template template = freemarkerConfig.getTemplate("mail.vm");
+			//freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+			freemarker.template.Template template = freemarkerConfig.getTemplate("mail.ftl");
 
 			Map<String, String> model = new HashMap<>();
 			model.put("title", request.getSubject());
