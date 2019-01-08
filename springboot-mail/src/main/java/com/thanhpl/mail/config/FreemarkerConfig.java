@@ -12,6 +12,7 @@ public class FreemarkerConfig {
 	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
 		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
 		bean.setTemplateLoaderPath("classpath:/templates/");
+		bean.setDefaultEncoding("UTF-8");
 		return bean;
 	}
 }
