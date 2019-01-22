@@ -13,6 +13,7 @@
 		<module>springboot-2.x-quartz</module>
 		<module>springboot-mail</module>
 		<module>springboot-network-file</module>
+		<module>springboot-rest-client</module>
 	</modules>
 
 	<properties>
