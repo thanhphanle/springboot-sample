@@ -6,8 +6,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
-@Configuration
-public class RedisConfig {
+/*
+ * Uncomment @Configuration and delete RedisLettuceConfig.java if you want to use Jedis
+ * */
+//@Configuration
+public class RedisJedisConfig {
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
 		return new JedisConnectionFactory();
@@ -21,3 +24,4 @@ public class RedisConfig {
 		return template;
 	}
 }
+
